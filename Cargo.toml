@@ -6,3 +6,15 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+orchard = "*"
+zcash_address = "0.1.0"
+zcash_primitives = "0.7.0"
+zcash_note_encryption = "0.1.0"
+blake2b_simd = "1.0.0"
+pasta_curves = "*"
+rand = "0.8.5"
+rand_core = "0.6.4"
+nonempty = "0.7"
+
+[patch.crates-io.orchard]
+path = "/home/agi/code/orchard"
