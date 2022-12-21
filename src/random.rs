@@ -7,8 +7,8 @@ use orchard::{
 };
 use pasta_curves::{
     arithmetic::{CurveExt, FieldExt},
-    group::ff::{ PrimeField},
-    group::{ GroupEncoding},
+    group::ff::PrimeField,
+    group::GroupEncoding,
     pallas::{Point, Scalar},
     Fp,
 };
@@ -217,7 +217,7 @@ impl RngCore for MockEncryptionRng {
         }
         self.state += 1;
     }
-    fn try_fill_bytes(&mut self, dest: &mut [u8]) -> Result<(), rand_core::Error> {
+    fn try_fill_bytes(&mut self, _dest: &mut [u8]) -> Result<(), rand_core::Error> {
         unimplemented!()
     }
 }

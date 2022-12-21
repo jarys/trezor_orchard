@@ -43,7 +43,8 @@ impl OrchardInput {
             NoteValue::from_raw(0u64),
             rho,
             rng.dummy_rseed_old(&rho),
-        );
+        )
+        .unwrap();
         let merkle_path = MerklePath::dummy(&mut thread_rng());
         OrchardInput { note, merkle_path }
     }
@@ -101,7 +102,7 @@ impl TrezorBuilder {
         bundle_rng.shuffle_outputs(&mut self.outputs);
         let mut circuits: Vec<Circuit> = vec![];
         let mut actions: Vec<Action<_>> = vec![];
-        let mut balance = ValueSum::zero();
+        let mut balance = ValueSum::default(); // zero
         let mut rcv_sum = ValueCommitTrapdoor::from_bytes([0u8; 32]).unwrap();
         for (i, (maybe_input, maybe_output)) in self
             .inputs
@@ -121,7 +122,7 @@ impl TrezorBuilder {
 
             let output = maybe_output.unwrap_or_else(|| OrchardOutput::dummy());
 
-            let (recipient, scope, ovk) = match output.recipient {
+            let (recipient, _scope, ovk) = match output.recipient {
                 Recipient::External(addr) => (
                     parse_u_address(addr)?,
                     Scope::External,
@@ -155,7 +156,8 @@ impl TrezorBuilder {
                 NoteValue::from_raw(output.amount),
                 nf_old,
                 rng.rseed_new(&nf_old),
-            );
+            )
+            .unwrap();
 
             let cm_new = note.commitment();
             let cmx = cm_new.into();
